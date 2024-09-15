@@ -34,7 +34,7 @@ public class UserService {
 		}
 		
 		User createdUser = new User();
-		createdUser.setFristName(user.getFristName());
+		createdUser.setFirstName(user.getFirstName());
 		createdUser.setLastName(user.getLastName());
 		createdUser.setEmail(user.getEmail());
 		createdUser.setPassword(encoder.encode(user.getPassword()));
@@ -56,7 +56,8 @@ public class UserService {
 	}
 
 	public User getUser(String jwt) throws UserException {
-		User user = userRepo.findByEmail(jwtService.extractUserName(jwt));
+		String token = jwt.substring(7);
+		User user = userRepo.findByEmail(jwtService.extractUserName(token));
 		if(user==null) {
 			throw new UserException("User with Email not found");
 		}

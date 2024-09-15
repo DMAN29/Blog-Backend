@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,23 +33,23 @@ public class BlogController {
 		return new ResponseEntity<List<Blog>>( blogService.getAllBlogs(),HttpStatus.OK);
 	}
 	
-	@GetMapping("/{email}")
+	@GetMapping("/find")
 	public ResponseEntity<List<Blog>> getBlogsByEmail(@RequestParam String email) throws UserException{
 		return new ResponseEntity<List<Blog>>(blogService.getBlogsByEmail(email),HttpStatus.OK);
 	}
 	
-	@PostMapping("/")
-	public ResponseEntity<Blog> postBlog(@RequestBody Blog blog, @RequestHeader("Authentication") String jwt) throws UserException{
+	@PostMapping("")
+	public ResponseEntity<Blog> postBlog(@RequestBody Blog blog, @RequestHeader("Authorization") String jwt) throws UserException{
 		return new ResponseEntity<Blog>(blogService.postBlog(blog,jwt),HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Blog> updateBlog(@RequestParam Long id,@RequestBody Blog blog,@RequestHeader("Authentication") String jwt) throws BlogException, UserException{
+	public ResponseEntity<Blog> updateBlog(@PathVariable Long id,@RequestBody Blog blog,@RequestHeader("Authorization") String jwt) throws BlogException, UserException{
 		return new ResponseEntity<Blog>(blogService.updateBlog(id,blog,jwt),HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteBlog(@RequestParam Long id,@RequestHeader("Authenticaion")String jwt) throws BlogException, UserException{
+	public ResponseEntity<String> deleteBlog(@PathVariable Long id,@RequestHeader("Authorization")String jwt) throws BlogException, UserException{
 		return new ResponseEntity<String>(blogService.deleteBlog(id,jwt),HttpStatus.OK);
 	}
 }

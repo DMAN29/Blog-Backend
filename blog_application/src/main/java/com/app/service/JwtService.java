@@ -1,13 +1,10 @@
 package com.app.service;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,13 +18,13 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-	private String secretKey="" ;
+	private final String secretKey="BS695FBFMgEyRnfvp11VYDJq6uW2MqMtPsO2Z0usNlA=" ;
 	
-	public JwtService() throws NoSuchAlgorithmException {
-		KeyGenerator key = KeyGenerator.getInstance("HmacSHA256");
-		SecretKey sk = key.generateKey();
-		secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
-	}
+//	public JwtService() throws NoSuchAlgorithmException {
+//		KeyGenerator key = KeyGenerator.getInstance("HmacSHA256");
+//		SecretKey sk = key.generateKey();
+//		secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+//	}
 	public String generateToken(String username) {
 		Map<String, Object> claims = new HashMap<>();
 		return Jwts.builder()

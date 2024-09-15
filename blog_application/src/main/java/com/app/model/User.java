@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +29,7 @@ public class User {
 	
 	private String password;
 	
-	private String fristName ;
+	private String firstName ;
 	
 	private String lastName;
 	
@@ -38,9 +40,11 @@ public class User {
 	private LocalDateTime updatedAt;
 	
 	@OneToMany
+	@JsonIgnore
 	private	List<Blog> blog = new ArrayList<>();
 	
 	@OneToMany
+	@JsonIgnore
 	private List<Comment> comments = new ArrayList<>();
 	
 }

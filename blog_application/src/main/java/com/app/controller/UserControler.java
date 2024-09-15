@@ -20,9 +20,10 @@ public class UserControler {
 	private UserService userService;
 	
 	
-	@GetMapping("")
-	public ResponseEntity<User> getUser(@RequestHeader("Authentication") String jwt) throws UserException{
+	@GetMapping()
+	public ResponseEntity<User> getUser(@RequestHeader("Authorization") String jwt) throws UserException{
 		User user = userService.getUser(jwt);
+		System.out.print("hello");
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 	

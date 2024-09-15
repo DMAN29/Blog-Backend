@@ -53,7 +53,8 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public List<Comment> getCommentsByEmail(String email) throws UserException {
 		User user = userService.getUserByEmail(email);
-		return user.getComments();
+		System.out.println("email"+user.getComments());
+		return commentRepo.findByAuthor(user);
 	}
 
 	@Override
@@ -67,11 +68,11 @@ public class CommentServiceImpl implements CommentService {
 		User user = userService.getUser(jwt);
 
 		Comment existingComment = findById(id);
-
+		
 		if (existingComment.getAuthor().getEmail().equals(user.getEmail())) {
 			existingComment.setContent(comment.getContent());
 			existingComment.setUpdatedAt(LocalDateTime.now());
-			commentRepo.save(existingComment);
+			return commentRepo.save(existingComment);
 		}
 
 		throw new CommentException("You dont have access to edit this comment");

@@ -30,9 +30,6 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public List<Blog> getBlogsByEmail(String email) throws UserException {
 		User user = userService.getUserByEmail(email);
-		if (user == null) {
-			throw new UserException("User with email not found");
-		}
 		return blogRepo.findByAuthor(user);
 	}
 

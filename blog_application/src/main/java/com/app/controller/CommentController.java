@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,27 +30,27 @@ public class CommentController {
 	private CommentService commentService;
 
 	@PostMapping("/blog/{blogId}")
-	public ResponseEntity<Comment> postComment(@RequestBody Comment comment,@RequestParam Long blogId,@RequestHeader("Authentication") String jwt) throws UserException, BlogException{
+	public ResponseEntity<Comment> postComment(@RequestBody Comment comment,@PathVariable Long blogId,@RequestHeader("Authorization") String jwt) throws UserException, BlogException{
 		return new ResponseEntity<Comment>(commentService.postComment(comment,blogId,jwt),HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/email/{email}")
+	@GetMapping("/find")
 	public ResponseEntity<List<Comment>> getCommentsByEmail(@RequestParam String email) throws UserException{
 		return new ResponseEntity<List<Comment>>(commentService.getCommentsByEmail(email),HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<List<Comment>> getCommentsByPost(@RequestParam Long id) throws BlogException{
+	public ResponseEntity<List<Comment>> getCommentsByPost(@PathVariable Long id) throws BlogException{
 		return new ResponseEntity<List<Comment>>(commentService.getCommentsByBlog(id),HttpStatus.OK);
 	}
 	
 	@PutMapping("/edit/{id}")
-	public ResponseEntity<Comment> editComment(@RequestParam Long id,@RequestBody Comment comment, @RequestHeader("Authentication")String jwt) throws CommentException, UserException{
+	public ResponseEntity<Comment> editComment(@PathVariable Long id,@RequestBody Comment comment, @RequestHeader("Authorization")String jwt) throws CommentException, UserException{
 		return new ResponseEntity<Comment>(commentService.editComment(id,jwt,comment),HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteComment(@RequestParam Long id,@RequestHeader("Authentication") String jwt) throws CommentException, UserException{
+	public ResponseEntity<String> deleteComment(@PathVariable Long id,@RequestHeader("Authorization") String jwt) throws CommentException, UserException{
 		return new ResponseEntity<String>(commentService.deleteComment(id,jwt),HttpStatus.OK);
 	}
 }
