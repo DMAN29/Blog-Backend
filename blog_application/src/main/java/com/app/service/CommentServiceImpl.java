@@ -30,9 +30,6 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public Comment postComment(Comment comment, Long blogId, String jwt) throws UserException, BlogException {
 		User user = userService.getUser(jwt);
-		if (user == null) {
-			throw new UserException("User not found");
-		}
 
 		Blog blog = blogService.findById(blogId);
 

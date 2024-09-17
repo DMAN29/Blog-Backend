@@ -37,9 +37,6 @@ public class BlogServiceImpl implements BlogService {
 	public Blog postBlog(Blog blog, String jwt) throws UserException {
 		LocalDateTime time = LocalDateTime.now();
 		User user = userService.getUser(jwt);
-		if (user == null) {
-			throw new UserException("User not found");
-		}
 		blog.setAuthor(user);
 		blog.setCreatedAt(time);
 		blog.setUpdatedAt(time);
